@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Comparison</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #121212;
+        color: #f0f0f0;
+      }
+
+      .container {
+        background: #1a1a1a;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      .slider-container {
+        margin: 2rem 0;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        height: 15px;
+        border-radius: 5px;
+        background: linear-gradient(to right, #eb48f7, #9333ea);
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 25px;
+        height: 25px;
+        background: #eb48f7;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 10px #eb48f7;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .value-box {
+        background: #242424;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        color: #f0f0f0;
+        margin-bottom: 0.5rem;
+      }
+
+      .value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #eb48f7;
+      }
+
+      .label {
+        font-size: 0.9rem;
+        color: #f0f0f0;
+        margin-top: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>🐷</h2>
+      <div class="slider-container">
+        <input type="range" min="4" max="60" value="1" id="comparisonSlider" />
+      </div>
+      <div class="comparison">
+        <div class="value-box">
+          <div class="value" id="interval">4</div>
+          <div class="label">gigs/mo</div>
+        </div>
+        <div class="value-box">
+          <div class="value" id="surreal">£50</div>
+          <div class="label">Surreal</div>
+        </div>
+        <div class="value-box">
+          <div class="value" id="gigPig">£60</div>
+          <div class="label">Gig Pig</div>
+        </div>
+        <div class="value-box">
+          <div class="value" id="difference">£10</div>
+          <div class="label">Savings</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const slider = document.getElementById("comparisonSlider");
+      const intervalValue = document.getElementById("interval");
+      const surrealValue = document.getElementById("surreal");
+      const gigPigValue = document.getElementById("gigPig");
+      const differenceValue = document.getElementById("difference");
+
+      function updateValues() {
+        const value = parseInt(slider.value);
+        intervalValue.textContent = value;
+        const surreal = 40 + value * 2.5;
+
+        let gigPig;
+        if (value <= 20) {
+          gigPig = value * 15;
+        } else if (value <= 36) {
+          gigPig = 199 + (value - 20) * 9.95;
+        } else {
+          gigPig = 349 + (value - 60) * 5.82;
+        }
+
+        const difference = gigPig - surreal;
+
+        surrealValue.textContent = "£" + surreal.toFixed(2);
+        gigPigValue.textContent = "£" + gigPig.toFixed(2);
+        differenceValue.textContent = "£" + difference.toFixed(2);
+      }
+
+      slider.addEventListener("input", updateValues);
+    </script>
+  </body>
+</html>
