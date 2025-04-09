@@ -122,10 +122,12 @@
         let gigPig;
         if (value <= 13) {
           gigPig = value * 15;
-        } else if (value <= 36) {
-          gigPig = 199 + (value - 13) * 9.95;
+        } else if (value <= 20) {
+          gigPig = 199;
+        } else if (value <= 60) {
+          gigPig = 349;
         } else {
-          gigPig = 349 + (value - 36) * 5.82;
+          gigPig = 349 + (value - 60) * 5.82;
         }
 
         const difference = gigPig - surreal;
