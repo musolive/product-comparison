@@ -298,12 +298,12 @@
         <div class="slider-container">
           <div class="slider-container-inner">
             <div>How many gigs do you want to host per week, per site?</div>
-            <div class="slider-value" id="interval">4</div>
+            <div class="slider-value" id="interval">1</div>
           </div>
           <input
             type="range"
-            min="4"
-            max="100"
+            min="1"
+            max="25"
             value="1"
             id="comparisonSlider"
           />
@@ -353,23 +353,24 @@
       // link for jez calendly at the bottom with some bs 'more savings' copy or something
 
       function updateValues() {
-        const value = parseInt(slider.value);
+        const weeklyValue = parseInt(slider.value);
+        const monthlyValue = (weeklyValue * 52) / 12;
         const venues = parseInt(venuesInput.value) || 1;
-        intervalValue.textContent = value.toLocaleString();
-        const surrealMonthly = value < 10 ? 40 : 71;
-        const surreal = surrealMonthly + value * 1.4;
+        intervalValue.textContent = weeklyValue.toLocaleString();
+        const surrealMonthly = monthlyValue < 10 ? 40 : 71;
+        const surreal = surrealMonthly + monthlyValue * 1.4;
 
         let gigPig;
-        if (value <= 13) {
-          gigPig = value * 15;
-        } else if (value <= 20) {
+        if (monthlyValue <= 13) {
+          gigPig = monthlyValue * 15;
+        } else if (monthlyValue <= 20) {
           gigPig = 199;
-        } else if (value <= 35) {
-          gigPig = 199 + (value - 20) * 9.95;
-        } else if (value <= 60) {
+        } else if (monthlyValue <= 35) {
+          gigPig = 199 + (monthlyValue - 20) * 9.95;
+        } else if (monthlyValue <= 60) {
           gigPig = 349;
         } else {
-          gigPig = 349 + (value - 60) * 5.82;
+          gigPig = 349 + (monthlyValue - 60) * 5.82;
         }
 
         const difference = gigPig - surreal;
