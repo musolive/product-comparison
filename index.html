@@ -437,7 +437,7 @@
           <input
             type="range"
             min="1"
-            max="50"
+            max="25"
             value="1"
             id="comparisonSlider"
           />
@@ -488,7 +488,6 @@
             >Let's talk</a
           >
         </div>
-        🐷
       </div>
     </div>
 
@@ -572,19 +571,19 @@
         const sliderValue = parseInt(slider.value);
         if (isMonthly) {
           slider.min = "4";
-          slider.max = "200";
+          slider.max = "100";
           const newValue = sliderValue * 4;
-          if (newValue > 200) {
-            slider.value = 200;
+          if (newValue > 100) {
+            slider.value = 100;
           } else {
             slider.value = newValue;
           }
         } else {
           slider.min = "1";
-          slider.max = "50";
+          slider.max = "25";
           const newValue = Math.floor(sliderValue / 4);
-          if (newValue > 50) {
-            slider.value = 50;
+          if (newValue > 25) {
+            slider.value = 25;
           } else {
             slider.value = newValue;
           }
@@ -613,7 +612,7 @@
 
       // Set initial slider values
       slider.min = "1";
-      slider.max = "50";
+      slider.max = "25";
     </script>
   </body>
 </html>
