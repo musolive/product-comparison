@@ -388,6 +388,17 @@
         height: 60px;
         padding: 1rem;
       }
+
+      .per-month {
+        font-size: 0.8rem;
+        color: #f0f0f0;
+      }
+
+      .value-box-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
@@ -403,7 +414,7 @@
       </div>
       <div class="container">
         <h1>
-          <span class="pink">Monthly</span> savings switching from Gig Pig to
+          <span class="pink">Monthly</span> savings switching from GigPig to
           Surreal
         </h1>
         <div class="slider-container">
@@ -432,18 +443,22 @@
         </div>
         <div class="comparison">
           <div class="value-box">
+            <div class="per-month">Per <span id="timeUnit2">week</span></div>
             <div class="value" id="gigsPer">1</div>
-            <div class="label">Gigs per <span id="timeUnit2">week</span></div>
+            <div class="label">Gigs</div>
           </div>
           <div class="value-box">
+            <div class="per-month">Monthly cost</div>
             <div class="value" id="surreal">£45.60</div>
             <div class="label">Surreal</div>
           </div>
           <div class="value-box">
+            <div class="per-month">Monthly cost</div>
             <div class="value" id="gigPig">£60.00</div>
             <div class="label">Gig Pig</div>
           </div>
           <div class="value-box">
+            <div class="per-month">Monthly savings</div>
             <div class="value" id="difference">£14.40</div>
             <div class="label">Savings per venue</div>
           </div>
@@ -597,6 +612,12 @@
       // Set initial slider values
       slider.min = "1";
       slider.max = "25";
+
+      const showGigPig = Math.random() < 0.5;
+      if (showGigPig) {
+        gigPigValue.textContent = "£60.00";
+        differenceValue.textContent = "£14.40";
+      }
     </script>
   </body>
 </html>
