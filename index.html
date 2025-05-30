@@ -5,8 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Comparison</title>
     <style>
+      @font-face {
+        font-family: "RieglaClassic";
+        src: url("font/RieglaClassic-Regular.woff2") format("opentype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "RieglaClassic";
+        src: url("font/RieglaClassic-Regular.woff2") format("opentype");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "RieglaClassic";
+        src: url("font/RieglaClassic-Medium.woff2") format("opentype");
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "RieglaClassic";
+        src: url("font/RieglaClassic-Semibold.woff2") format("opentype");
+        font-weight: bold;
+        font-style: normal;
+      }
+
       body {
-        font-family: "Helvetica", sans-serif;
+        font-family: "RieglaClassic", "Futura", "Helvetica", sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -14,6 +41,7 @@
         margin: 0;
         background: #121212;
         color: #f0f0f0;
+        font-weight: normal;
       }
 
       .container {
@@ -22,7 +50,7 @@
         border-radius: 15px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         text-align: center;
-        max-width: 500px;
+        max-width: 900px;
         width: 90%;
         margin: 1rem;
       }
@@ -30,15 +58,18 @@
       .slider-container {
         margin: 2rem 0;
         padding: 0 1rem;
+        text-align: left;
+        font-size: 1.2rem;
       }
 
       input[type="range"] {
-        width: 100%;
-        height: 15px;
-        border-radius: 5px;
-        background: linear-gradient(to right, #eb48f7, #9333ea);
-        outline: none;
         -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 10px;
+        background: linear-gradient(to right, #ec55d8, #1340f6);
+        outline: none;
+        cursor: pointer;
       }
 
       input[type="range"]::-webkit-slider-thumb {
@@ -50,10 +81,13 @@
         cursor: pointer;
         box-shadow: 0 0 10px #eb48f7;
       }
+      h3 {
+        font-weight: 400;
+      }
 
       .comparison {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
         margin-top: 2rem;
       }
@@ -72,7 +106,7 @@
       }
 
       .value {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: bold;
         color: #eb48f7;
       }
@@ -81,6 +115,80 @@
         font-size: 0.9rem;
         color: #f0f0f0;
         margin-top: 0.5rem;
+      }
+
+      .venues-input {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .venues-input label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #f0f0f0;
+      }
+
+      .venues-input-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .venues-input input {
+        width: 80px;
+        padding: 0.5rem;
+        border: 2px solid #eb48f7;
+        border-radius: 5px;
+        background: #242424;
+        color: #f0f0f0;
+        text-align: center;
+        font-size: 1rem;
+        -moz-appearance: textfield;
+      }
+
+      .venues-input input::-webkit-outer-spin-button,
+      .venues-input input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .venues-button {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: linear-gradient(to right, #ec55d8, #1340f6);
+        color: #f0f0f0;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .venues-button:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+      }
+
+      .venues-button:active {
+        transform: scale(0.95);
+      }
+
+      .total-savings {
+        margin: 1.5rem 0;
+        padding: 1rem;
+        background: #242424;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .total-savings h3 {
+        margin: 0 0 0.5rem 0;
+        color: #f0f0f0;
+        font-size: 1.2rem;
       }
 
       @media (max-width: 600px) {
@@ -119,6 +227,15 @@
           width: 20px;
           height: 20px;
         }
+
+        .logo-link {
+          top: 1rem;
+          left: 1rem;
+        }
+
+        .logo-link img {
+          height: 30px;
+        }
       }
 
       @media (max-width: 400px) {
@@ -130,30 +247,94 @@
           padding: 0.75rem;
         }
       }
+
+      .slider-container-inner {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+      }
+
+      .slider-value {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .container-outer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .logo-link {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        transition: opacity 0.2s ease;
+      }
+
+      .logo-link:hover {
+        opacity: 0.8;
+      }
+
+      .logo-link img {
+        height: 40px;
+        width: auto;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h2>🐷</h2>
-      <div class="slider-container">
-        <input type="range" min="4" max="60" value="1" id="comparisonSlider" />
+    <div class="container-outer">
+      <a
+        href="https://surreal.live/for-venues"
+        target="_blank"
+        class="logo-link"
+      >
+        <img src="images/Surreal_logo_wordmark-White.png" alt="Surreal" />
+      </a>
+      <div class="container">
+        <h1>Monthly savings switching from Gig Pig to Surreal</h1>
+        <div class="slider-container">
+          <div class="slider-container-inner">
+            <div>How many gigs do you want to host per week, per site?</div>
+            <div class="slider-value" id="interval">4</div>
+          </div>
+          <input
+            type="range"
+            min="4"
+            max="100"
+            value="1"
+            id="comparisonSlider"
+          />
+        </div>
+        <div class="comparison">
+          <div class="value-box">
+            <div class="value" id="surreal">£50</div>
+            <div class="label">Surreal</div>
+          </div>
+          <div class="value-box">
+            <div class="value" id="gigPig">£60</div>
+            <div class="label">Gig Pig</div>
+          </div>
+          <div class="value-box">
+            <div class="value" id="difference">£10</div>
+            <div class="label">Savings per site</div>
+          </div>
+        </div>
       </div>
-      <div class="comparison">
-        <div class="value-box">
-          <div class="value" id="interval">4</div>
-          <div class="label">gigs/mo</div>
+      <div class="container">
+        <h2>Multiple sites?</h2>
+        <div class="venues-input">
+          <div class="venues-input-container">
+            <button class="venues-button" id="decreaseVenues">-</button>
+            <input type="number" id="venues" min="1" value="1" />
+            <button class="venues-button" id="increaseVenues">+</button>
+          </div>
         </div>
-        <div class="value-box">
-          <div class="value" id="surreal">£50</div>
-          <div class="label">Surreal</div>
-        </div>
-        <div class="value-box">
-          <div class="value" id="gigPig">£60</div>
-          <div class="label">Gig Pig</div>
-        </div>
-        <div class="value-box">
-          <div class="value" id="difference">£10</div>
-          <div class="label">Savings</div>
+        <div class="total-savings">
+          <h3>Total Monthly Savings</h3>
+          <div class="value" id="totalSavings">£10</div>
         </div>
       </div>
     </div>
@@ -164,11 +345,19 @@
       const surrealValue = document.getElementById("surreal");
       const gigPigValue = document.getElementById("gigPig");
       const differenceValue = document.getElementById("difference");
+      const venuesInput = document.getElementById("venues");
+      const totalSavingsValue = document.getElementById("totalSavings");
+      const decreaseVenues = document.getElementById("decreaseVenues");
+      const increaseVenues = document.getElementById("increaseVenues");
+
+      // link for jez calendly at the bottom with some bs 'more savings' copy or something
 
       function updateValues() {
         const value = parseInt(slider.value);
-        intervalValue.textContent = value;
-        const surreal = 40 + value * 2.5;
+        const venues = parseInt(venuesInput.value) || 1;
+        intervalValue.textContent = value.toLocaleString();
+        const surrealMonthly = value < 10 ? 40 : 71;
+        const surreal = surrealMonthly + value * 1.4;
 
         let gigPig;
         if (value <= 13) {
@@ -184,13 +373,50 @@
         }
 
         const difference = gigPig - surreal;
+        const totalSavings = difference * venues;
 
-        surrealValue.textContent = "£" + surreal.toFixed(2);
-        gigPigValue.textContent = "£" + gigPig.toFixed(2);
-        differenceValue.textContent = "£" + difference.toFixed(2);
+        surrealValue.textContent =
+          "£" +
+          surreal.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        gigPigValue.textContent =
+          "£" +
+          gigPig.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        differenceValue.textContent =
+          "£" +
+          difference.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        totalSavingsValue.textContent =
+          "£" +
+          totalSavings.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
       }
 
       slider.addEventListener("input", updateValues);
+      venuesInput.addEventListener("input", updateValues);
+
+      decreaseVenues.addEventListener("click", () => {
+        const currentValue = parseInt(venuesInput.value);
+        if (currentValue > 1) {
+          venuesInput.value = currentValue - 1;
+          updateValues();
+        }
+      });
+
+      increaseVenues.addEventListener("click", () => {
+        const currentValue = parseInt(venuesInput.value);
+        venuesInput.value = currentValue + 1;
+        updateValues();
+      });
     </script>
   </body>
 </html>
