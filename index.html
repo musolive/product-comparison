@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="favicon.png" />
     <title>Product Comparison</title>
     <style>
       @font-face {
@@ -87,7 +88,7 @@
 
       .comparison {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
         margin-top: 2rem;
       }
@@ -254,6 +255,65 @@
         padding: 1rem 0;
       }
 
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .toggle-label {
+        color: #f0f0f0;
+        font-size: 0.9rem;
+      }
+
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #242424;
+        transition: 0.4s;
+        border-radius: 24px;
+        border: 2px solid #eb48f7;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 2px;
+        background: linear-gradient(to right, #ec55d8, #1340f6);
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .toggle-slider {
+        background-color: #242424;
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(26px);
+      }
+
       .slider-value {
         font-size: 1.2rem;
         font-weight: bold;
@@ -282,6 +342,49 @@
         height: 40px;
         width: auto;
       }
+
+      .time-unit {
+        font-size: 1.5rem;
+        color: #eb48f7;
+      }
+
+      .monthly-savings {
+        font-size: 4rem;
+        color: #eb48f7;
+        font-weight: bold;
+      }
+
+      .savings-text {
+        font-size: 1.5rem;
+        color: #f0f0f0;
+      }
+
+      .cta-button {
+        display: inline-block;
+        margin-top: 1.5rem;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #f0f0f0;
+        background: linear-gradient(to right, #ec55d8, #1340f6);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(235, 72, 247, 0.4);
+      }
+
+      .cta-button:active {
+        transform: translateY(0);
+      }
+      .pink {
+        color: #ec55d8;
+      }
     </style>
   </head>
   <body>
@@ -294,11 +397,25 @@
         <img src="images/Surreal_logo_wordmark-White.png" alt="Surreal" />
       </a>
       <div class="container">
-        <h1>Monthly savings switching from Gig Pig to Surreal</h1>
+        <h1>
+          <span class="pink">Monthly</span> savings switching from Gig Pig to
+          Surreal
+        </h1>
         <div class="slider-container">
           <div class="slider-container-inner">
-            <div>How many gigs do you want to host per week, per site?</div>
+            <div>
+              How many gigs do you want to host per
+              <span class="time-unit" id="timeUnit">week</span>, per site?
+            </div>
             <div class="slider-value" id="interval">1</div>
+          </div>
+          <div class="toggle-container">
+            <span class="toggle-label">Week</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="timeToggle" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Month</span>
           </div>
           <input
             type="range"
@@ -310,15 +427,19 @@
         </div>
         <div class="comparison">
           <div class="value-box">
-            <div class="value" id="surreal">£50</div>
+            <div class="value" id="gigsPer">1</div>
+            <div class="label">Gigs per <span id="timeUnit2">week</span></div>
+          </div>
+          <div class="value-box">
+            <div class="value" id="surreal">£45.60</div>
             <div class="label">Surreal</div>
           </div>
           <div class="value-box">
-            <div class="value" id="gigPig">£60</div>
+            <div class="value" id="gigPig">£60.00</div>
             <div class="label">Gig Pig</div>
           </div>
           <div class="value-box">
-            <div class="value" id="difference">£10</div>
+            <div class="value" id="difference">£14.40</div>
             <div class="label">Savings per site</div>
           </div>
         </div>
@@ -334,7 +455,17 @@
         </div>
         <div class="total-savings">
           <h3>Total Monthly Savings</h3>
-          <div class="value" id="totalSavings">£10</div>
+          <div class="monthly-savings" id="totalSavings">£14.40</div>
+          <div class="savings-text">
+            This is what you'd save with our website pricing alone.<br />
+            Want to do even better?
+          </div>
+          <a
+            href="https://calendly.com/heysurreal/venues-surreal-discovery-clone-1"
+            class="cta-button"
+            target="_blank"
+            >Let's talk</a
+          >
         </div>
       </div>
     </div>
@@ -349,42 +480,54 @@
       const totalSavingsValue = document.getElementById("totalSavings");
       const decreaseVenues = document.getElementById("decreaseVenues");
       const increaseVenues = document.getElementById("increaseVenues");
-
-      // link for jez calendly at the bottom with some bs 'more savings' copy or something
+      const timeToggle = document.getElementById("timeToggle");
+      const bookCallButton = document.getElementById("bookCallButton");
+      const gigsPer = document.getElementById("gigsPer");
 
       function updateValues() {
-        const weeklyValue = parseInt(slider.value);
-        const monthlyValue = (weeklyValue * 52) / 12;
+        const value = parseInt(slider.value);
+        const isMonthly = timeToggle.checked;
+        const displayValue = value;
+        const monthlyValue = isMonthly ? value : value * 4;
+        const weeklyValue = isMonthly ? Math.floor(value / 4) : value;
         const venues = parseInt(venuesInput.value) || 1;
-        intervalValue.textContent = weeklyValue.toLocaleString();
-        const surrealMonthly = monthlyValue < 10 ? 40 : 71;
-        const surreal = surrealMonthly + monthlyValue * 1.4;
 
-        let gigPig;
+        document.getElementById("timeUnit").textContent = isMonthly
+          ? "month"
+          : "week";
+        document.getElementById("timeUnit2").textContent = isMonthly
+          ? "month"
+          : "week";
+        intervalValue.textContent = displayValue.toLocaleString();
+        gigsPer.textContent = displayValue.toLocaleString();
+        const surrealMonthlyFlatRate = monthlyValue < 10 ? 40 : 71;
+        const surrealMonthly = surrealMonthlyFlatRate + monthlyValue * 1.4;
+
+        let gigPigMonthly;
         if (monthlyValue <= 13) {
-          gigPig = monthlyValue * 15;
+          gigPigMonthly = monthlyValue * 15;
         } else if (monthlyValue <= 20) {
-          gigPig = 199;
+          gigPigMonthly = 199;
         } else if (monthlyValue <= 35) {
-          gigPig = 199 + (monthlyValue - 20) * 9.95;
+          gigPigMonthly = 199 + (monthlyValue - 20) * 9.95;
         } else if (monthlyValue <= 60) {
-          gigPig = 349;
+          gigPigMonthly = 349;
         } else {
-          gigPig = 349 + (monthlyValue - 60) * 5.82;
+          gigPigMonthly = 349 + (monthlyValue - 60) * 5.82;
         }
 
-        const difference = gigPig - surreal;
+        const difference = gigPigMonthly - surrealMonthly;
         const totalSavings = difference * venues;
 
         surrealValue.textContent =
           "£" +
-          surreal.toLocaleString(undefined, {
+          surrealMonthly.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           });
         gigPigValue.textContent =
           "£" +
-          gigPig.toLocaleString(undefined, {
+          gigPigMonthly.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           });
@@ -402,8 +545,35 @@
           });
       }
 
+      function toggleTimeUnit() {
+        const isMonthly = timeToggle.checked;
+        const sliderValue = parseInt(slider.value);
+        if (isMonthly) {
+          slider.min = "4";
+          slider.max = "100";
+          const newValue = sliderValue * 4;
+          if (newValue > 100) {
+            slider.value = 100;
+          } else {
+            slider.value = newValue;
+          }
+        } else {
+          slider.min = "1";
+          slider.max = "25";
+          const newValue = Math.floor(sliderValue / 4);
+          if (newValue > 25) {
+            slider.value = 25;
+          } else {
+            slider.value = newValue;
+          }
+        }
+
+        updateValues();
+      }
+
       slider.addEventListener("input", updateValues);
       venuesInput.addEventListener("input", updateValues);
+      timeToggle.addEventListener("change", toggleTimeUnit);
 
       decreaseVenues.addEventListener("click", () => {
         const currentValue = parseInt(venuesInput.value);
@@ -418,6 +588,10 @@
         venuesInput.value = currentValue + 1;
         updateValues();
       });
+
+      // Set initial slider values
+      slider.min = "1";
+      slider.max = "25";
     </script>
   </body>
 </html>
