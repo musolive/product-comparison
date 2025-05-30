@@ -437,7 +437,7 @@
           <input
             type="range"
             min="1"
-            max="25"
+            max="50"
             value="1"
             id="comparisonSlider"
           />
@@ -572,19 +572,19 @@
         const sliderValue = parseInt(slider.value);
         if (isMonthly) {
           slider.min = "4";
-          slider.max = "100";
+          slider.max = "200";
           const newValue = sliderValue * 4;
-          if (newValue > 100) {
-            slider.value = 100;
+          if (newValue > 200) {
+            slider.value = 200;
           } else {
             slider.value = newValue;
           }
         } else {
           slider.min = "1";
-          slider.max = "25";
+          slider.max = "50";
           const newValue = Math.floor(sliderValue / 4);
-          if (newValue > 25) {
-            slider.value = 25;
+          if (newValue > 50) {
+            slider.value = 50;
           } else {
             slider.value = newValue;
           }
@@ -613,13 +613,7 @@
 
       // Set initial slider values
       slider.min = "1";
-      slider.max = "25";
-
-      const showGigPig = Math.random() < 0.5;
-      if (showGigPig) {
-        gigPigValue.textContent = "£60.00";
-        differenceValue.textContent = "£14.40";
-      }
+      slider.max = "50";
     </script>
   </body>
 </html>
